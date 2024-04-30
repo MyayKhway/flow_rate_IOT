@@ -1,3 +1,4 @@
+// data fetchings will be done here after implementing database
 import {
     StationType
 } from './definitions';

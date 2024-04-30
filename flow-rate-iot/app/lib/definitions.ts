@@ -10,8 +10,11 @@ export type StationTable = {
 }
 
 export type FLowRateTable = {
-    station_id: string;
-    flow_rate: number;
+    station0_data: number;
+    station1_data: number;
+    station2_data: number;
+    station3_data: number;
+    station4_data: number;
     time: EpochTimeStamp;
 
 }
