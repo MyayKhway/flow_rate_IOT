@@ -3,7 +3,7 @@ import {
     APIProvider,
     Map,
 } from "@vis.gl/react-google-maps";
-const { stations, _ } = require('../lib/dummy-data.js');
+const { stations, _ } = require('../../lib/dummy-data.js');
 import MapMarker from './mapMarker';
 import { StationType } from '@/app/lib/definitions';
 
