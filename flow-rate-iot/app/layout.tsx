@@ -5,8 +5,9 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "flow-rate-monitor-demo",
+  title: "Water Management System",
   description: "A prototype for flow rate monitoring application developed at KMITL",
+
 };
 
 export default function RootLayout({

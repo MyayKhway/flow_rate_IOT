@@ -6,6 +6,7 @@ import {
 const { stations, _ } = require('../../lib/dummy-data.js');
 import MapMarker from './mapMarker';
 import { StationType } from '@/app/lib/definitions';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function MapComponent() {
     const position = { lat: 13.729088, lng: 100.76935}
@@ -20,7 +21,7 @@ export default function MapComponent() {
             <div className="h-svh w-2/3">
                 <Map defaultZoom={17.3} defaultCenter={position} mapId={mapID}>
                 {stations.map((station : StationType) => 
-                    <MapMarker station={station} />
+                    <MapMarker key={uuidv4()} station={station} />
                 )}
                 </Map>
             </div>

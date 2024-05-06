@@ -4,7 +4,7 @@ import Station from './station';
 import { useState } from 'react';
 import { StationType } from '@/app/lib/definitions';
 
-export default function MapMarker({ station }: { station: StationType }) {
+export default function MapMarker({ station}: { station: StationType }) {
     const [open, setOpen] = useState(false);
     if (!open) {
         return (
