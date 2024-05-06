@@ -11,7 +11,7 @@ export default function MapMarker({ station }: { station: StationType }) {
             <AdvancedMarker position={{ lat: station.lat, lng: station.lng }} onClick={() => setOpen(true)}>
             </AdvancedMarker>
         )
-    } return (
+    } else return (
         <>
             <AdvancedMarker position={{ lat: station.lat, lng: station.lng }} onClick={() => setOpen(true)}>
             </AdvancedMarker>
