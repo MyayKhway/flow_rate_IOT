@@ -67,7 +67,7 @@ const chartdata = [
 const dataFormatter = (number: number) =>
   `$${Intl.NumberFormat('us').format(number).toString()}`;
 
-export function LineChartHero() {
+export function LineChartComponent() {
   return (
     <LineChart
       className="h-80"
