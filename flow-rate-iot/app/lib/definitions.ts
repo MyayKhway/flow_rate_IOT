@@ -16,5 +16,5 @@ export type FLowRateTable = {
     station3_data: number;
     station4_data: number;
     time: EpochTimeStamp;
-
+    id: string;
 }

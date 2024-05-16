@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  relationMode = "foreignKeys"
+}
+
+model Station {
+  id        String      @id @db.VarChar(50)
+  lat       Float
+  lng       Float
+  name      String     @db.VarChar(255)
+  volumes   Flow[]
+}
+
+model Flow {
+  stationFrom   Station     @relation(fields: [stationId], references [id])
+  stationId     String      @db.VarChar(50)
+  volume        Float
+  time          DateTime?   @db.Timestamptz(6)
+}
+
