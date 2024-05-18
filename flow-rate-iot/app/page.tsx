@@ -1,7 +1,6 @@
-import Image from "next/image";
-import MapComponent from '@/app/ui/mapdashboard/mapComponent';
 import Navbar from '@/app/ui/navbar';
 import Dashboard from "@/app/ui/mapdashboard/dashboard";
+import { PrismaClient } from '@prisma/client';
 
 export default function Home() {
   return (

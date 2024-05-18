@@ -8,6 +8,7 @@ import MapMarker from './mapMarker';
 import { StationType } from '@/app/lib/definitions';
 import { v4 as uuidv4 } from 'uuid';
 import { Dispatch, SetStateAction } from 'react';
+import { PrismaClient } from '@prisma/client';
 
 interface propsType {
     focus: string[];
@@ -17,11 +18,13 @@ interface propsType {
 export default function MapComponent( props: propsType ) {
     const position = { lat: 13.729088, lng: 100.76935}
 
+    // to solve type problems
     let apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
     if (!apiKey) apiKey = '';
 
     let mapID = process.env.NEXT_PUBLIC_MAP_ID;
     if (!mapID) mapID = '';
+
     return (
         <APIProvider apiKey={apiKey}>
             <div className="h-svh w-2/3">
