@@ -7,6 +7,7 @@ import Link from 'next/link';
 
 interface propsType {
     station: StationType;
+    averageFlow: number;
     focus: string[];
     setFocus(data: string[]): void;
 }
@@ -18,7 +19,6 @@ export default function Station(props: propsType) {
             if (focus[i] == name) found = true;
         }
         if (!found) {
-            console.log("Not found, adding");
             return focus.concat([name]);
         }
         else {
@@ -40,7 +40,7 @@ export default function Station(props: propsType) {
             </p>
             <p className="text-3xl text-tremor-content-strong dark:text-dark-tremor-content-strong font-semibold"
                 key={uuidv4()} suppressHydrationWarning>
-                {`${Math.round(Math.random() * 1000)} cm3/s`}
+                {`${props.averageFlow} cm3/s`}
             </p>
             <Link className="text-slate-100 underline-offset-1" href="" key={uuidv4()}>
                 see chart

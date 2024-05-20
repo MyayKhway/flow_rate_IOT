@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 interface propsType {
     station: StationType;
+    averageFlow: number;
     focus: string[];
     setFocus: Dispatch<SetStateAction<string[]>>;
 }
@@ -28,7 +29,7 @@ export default function MapMarker(props: propsType) {
             <AdvancedMarker position={{ lat: props.station.lat, lng: props.station.lng }} onClick={() => setOpen(true)} key={uuidv4()}>
             </AdvancedMarker>
             <InfoWindow position={{ lat: props.station.lat, lng: props.station.lng }} onCloseClick={() => setOpen(false)} key={uuidv4()}>
-            <Station station={props.station} focus={props.focus} setFocus={props.setFocus} key={uuidv4()}/>
+            <Station station={props.station} averageFlow={props.averageFlow} focus={props.focus} setFocus={props.setFocus} key={uuidv4()}/>
             </InfoWindow>
         </>
     )

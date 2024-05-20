@@ -582,8 +582,9 @@ const SingleDatePicker = ({
     }, [date, locale, showTimePicker])
 
     const onApply = () => {
-        setOpen(false)
-        onChange?.(date)
+        alert("new Date selected");
+        setOpen(false);
+        onChange?.(date);
     }
 
     React.useEffect(() => {

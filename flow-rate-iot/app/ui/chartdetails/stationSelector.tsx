@@ -6,7 +6,7 @@ import { MultiSelect, MultiSelectItem } from '@tremor/react';
 export default function StationSelector() {
     return (
         <div className="flex-col gap-y-2">
-            <MultiSelect onValueChange={()=>console.log("Changed the input")}>
+            <MultiSelect onValueChange={(value)=>console.log(`Changed the input ${value}`)}>
                 <MultiSelectItem value="0">Station 0</MultiSelectItem>
                 <MultiSelectItem value="1">Station 1</MultiSelectItem>
                 <MultiSelectItem value="2">Station 2</MultiSelectItem>

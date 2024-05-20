@@ -4,3 +4,11 @@ export type StationType = {
     lng: number;
     name: string;
 };
+
+export type AverageFlowType = {
+    stationId: string,
+    totalFlow: number,
+    numberOfFlow: number,
+    averageFlow: number
+}
+
