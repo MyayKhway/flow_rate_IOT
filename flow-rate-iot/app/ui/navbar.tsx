@@ -4,11 +4,12 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const navigation = [
     { name: 'Dashboard', href: '/', current: true },
     { name: 'Details', href: '/details', current: false },
-    { name: 'Live Feed', href: '', current: false },
+    { name: 'Live Feed', href: '/livefeed', current: false },
 ]
 
 function classNames(...classes) {
@@ -16,6 +17,7 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+    const pathName = usePathname();
     return (
         <Disclosure as="nav" className="bg-gray-800 w-full">
             {({ open }) => (
@@ -51,7 +53,7 @@ export default function Navbar() {
                                                 key={item.name}
                                                 href={item.href}
                                                 className={classNames(
-                                                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                                    (pathName == item.href) ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                                                     'rounded-md px-3 py-2 text-sm font-medium'
                                                 )}
                                                 aria-current={item.current ? 'page' : undefined}
