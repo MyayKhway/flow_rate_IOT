@@ -13,23 +13,23 @@ interface propsType {
 }
 
 export default function Station(props: propsType) {
-    const pushName = (focus: string[], name: string) => {
+    const pushName = (focus: string[], id: string) => {
         let found = false;
         for (let i = 0; i < focus.length; i++) {
-            if (focus[i] == name) found = true;
+            if (focus[i] == id) found = true;
         }
         if (!found) {
-            return focus.concat([name]);
+            return focus.concat([id]);
         }
         else {
-            const filtered = focus.filter((e) => e != name);
+            const filtered = focus.filter((e) => e != id);
             return filtered;
         }
     }
     const focus = props.focus;
     return (
         <Card className="mx-auto max-w-xs" decoration="top" decorationColor="indigo" key={uuidv4()}
-            onClick={() => props.setFocus(pushName(focus, props.station.name))}>
+            onClick={() => props.setFocus(pushName(focus, props.station.id))}>
             <p key={uuidv4()}>
                 <b className="text-tremor-default text-tremor-content dark:text-dark-tremor-content" key={uuidv4()}>
                     {props.station.name}
