@@ -1,5 +1,7 @@
 'use client';
 import { LineChart } from '@tremor/react';
+import { fetchLast3hrAvg } from '@/app/lib/data';
+import { useEffect, useState } from 'react';
 
 const chartdata = [
     {
@@ -82,6 +84,7 @@ const dataFormatter = (number: number) =>
 
 export function LineChartComponent({ dateRange }: { dateRange: string }) {
     // TODO respond to dateRange data
+
     return (
         <LineChart
             className="h-80"

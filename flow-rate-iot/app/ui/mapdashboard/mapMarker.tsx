@@ -14,9 +14,20 @@ interface propsType {
 }
 
 export default function MapMarker(props: propsType) {
+    const removeID = (ids: string[], value: string) => {
+        const index = ids.indexOf(value);
+        if (index != -1) {
+            ids.splice(index, 1);
+            return ids;
+        } else {
+            return ids;
+        }
+    }
     let found = false;
     for (let i = 0; i < props.focus.length; i++) {
-        if (props.focus[i] == props.station.name) found = true;
+        if (props.focus[i] == props.station.id) {
+            found = true;
+        }
     }
     const [open, setOpen] = useState(found);
     if (!open) {
@@ -26,10 +37,24 @@ export default function MapMarker(props: propsType) {
         )
     } else return (
         <>
-            <AdvancedMarker position={{ lat: props.station.lat, lng: props.station.lng }} onClick={() => setOpen(true)} key={uuidv4()}>
+            <AdvancedMarker
+                position={{ lat: props.station.lat, lng: props.station.lng }}
+                onClick={() => setOpen(true)}
+                key={uuidv4()}
+            >
             </AdvancedMarker>
-            <InfoWindow position={{ lat: props.station.lat, lng: props.station.lng }} onCloseClick={() => setOpen(false)} key={uuidv4()}>
-            <Station station={props.station} averageFlow={props.averageFlow} focus={props.focus} setFocus={props.setFocus} key={uuidv4()}/>
+            <InfoWindow
+                position={{ lat: props.station.lat, lng: props.station.lng }}
+                onCloseClick={() => props.setFocus(removeID(props.focus, props.station.id))}
+                key={uuidv4()}
+            >
+                <Station
+                    station={props.station}
+                    averageFlow={props.averageFlow}
+                    focus={props.focus}
+                    setFocus={props.setFocus}
+                    key={uuidv4()}
+                />
             </InfoWindow>
         </>
     )

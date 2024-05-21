@@ -2,7 +2,6 @@ import Navbar from '@/app/ui/navbar';
 import Dashboard from "@/app/ui/mapdashboard/dashboard";
 import { fetchStations, fetchLast3hrAvg } from './lib/data';
 import { StationType, AverageFlowType } from '@/app/lib/definitions';
-import { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 
 
 export default async function Home() {
