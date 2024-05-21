@@ -1,7 +1,7 @@
 'use client';
 import MapComponent from './mapComponent';
 import StationList from './stationList';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { StationType, AverageFlowType } from '@/app/lib/definitions';
 
 interface DashboardPropsType {

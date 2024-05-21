@@ -2,11 +2,29 @@
 
 import React from "react"
 import { DateRange, DateRangePicker } from "@/app/ui/chartdetails/datePicker"
+import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
-export const DateRangePickerPresets = () => {
+export function DateRangePickerPresets() {
+    const searchParams = useSearchParams();
+
     const [dateRange, setDateRange] = React.useState<DateRange | undefined>(
         undefined,
     )
+    const params = new URLSearchParams(searchParams);
+    if (dateRange != undefined) {
+        if (dateRange.from != undefined && dateRange.to != undefined) {
+            params.set('daterange', dateRange.from.toISOString() + dateRange.to.toISOString());
+        } else {
+            const params = new URLSearchParams(searchParams);
+            params.delete('daterange');
+        }
+    } else {
+        params.delete('daterange');
+    }
+    const pathname = usePathname();
+    const { replace } = useRouter();
+    replace(`${pathname}?${params.toString()}`)
+
     const presets = [
         {
             label: "Today",
@@ -65,7 +83,7 @@ export const DateRangePickerPresets = () => {
                 value={dateRange}
                 onChange={(date) => {
                     setDateRange(date);
-                    alert(date ? date.from: "undefined");
+                    alert(date ? date.from : "undefined");
                 }}
                 className="w-60"
             />

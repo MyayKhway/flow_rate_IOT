@@ -79,7 +79,9 @@ const chartdata = [
 const dataFormatter = (number: number) =>
     `${Intl.NumberFormat('us').format(number).toString()}`;
 
-export function LineChartComponent() {
+
+export function LineChartComponent({ dateRange }: { dateRange: string }) {
+    // TODO respond to dateRange data
     return (
         <LineChart
             className="h-80"
