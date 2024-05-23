@@ -27,6 +27,34 @@ export function DateRangePickerPresets() {
 
     const presets = [
         {
+            label: "Last 1 hour",
+            dateRange: {
+                from: new Date(new Date().setHours(new Date().getHours() - 1)),
+                to: new Date(),
+            },
+        },
+        {
+            label: "Last 2 hour",
+            dateRange: {
+                from: new Date(new Date().setHours(new Date().getHours() - 2)),
+                to: new Date(),
+            },
+        },
+        {
+            label: "Last 6 hour",
+            dateRange: {
+                from: new Date(new Date().setHours(new Date().getHours() - 6)),
+                to: new Date(),
+            },
+        },
+        {
+            label: "Last 12 hour",
+            dateRange: {
+                from: new Date(new Date().setHours(new Date().getHours() - 12)),
+                to: new Date(),
+            },
+        },
+        {
             label: "Today",
             dateRange: {
                 from: new Date(),
@@ -68,13 +96,6 @@ export function DateRangePickerPresets() {
                 to: new Date(),
             },
         },
-        {
-            label: "Year to date",
-            dateRange: {
-                from: new Date(new Date().setFullYear(new Date().getFullYear(), 0, 1)),
-                to: new Date(),
-            },
-        },
     ]
     return (
         <div className="flex flex-col items-center gap-y-4">
@@ -83,7 +104,6 @@ export function DateRangePickerPresets() {
                 value={dateRange}
                 onChange={(date) => {
                     setDateRange(date);
-                    alert(date ? date.from : "undefined");
                 }}
                 className="w-60"
             />
