@@ -38,3 +38,6 @@ next-env.d.ts
 
 #video
 *.mp4
+
+# internal documentation
+final_report.md
