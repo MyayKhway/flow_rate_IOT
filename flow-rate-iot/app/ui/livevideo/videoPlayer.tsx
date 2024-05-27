@@ -5,7 +5,7 @@ import {
     SelectItem
 } from '@tremor/react';
 import { StationType, } from '@/app/lib/definitions';
-import { v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 interface VideoPlayerPropsType {
     stations: StationType[];
@@ -19,15 +19,13 @@ export default function VideoPlayer(props: VideoPlayerPropsType) {
                 <video className="w-fit h-fit" autoPlay loop muted>
                     <source src={'Background1.mp4'} type='video/mp4' />
                 </video> : <p> No Video </p>}
-            <div >
-                <Select defaultValue="0" onValueChange={(value: string) => setCurrentStation(value)}>
-                    <SelectItem value="">No Video Feed</SelectItem>
-                    {props.stations.map((station) => {
+            <Select defaultValue="0" onValueChange={(value: string) => setCurrentStation(value)}>
+                <SelectItem value="">No Video Feed</SelectItem>
+                {props.stations.map((station) => {
                     return (<SelectItem value={station.id} key={uuidv4()}> {station.name} </SelectItem>)
-                    })
-                    }
-                </Select>
-            </div>
+                })
+                }
+            </Select>
         </div>
     )
 }
