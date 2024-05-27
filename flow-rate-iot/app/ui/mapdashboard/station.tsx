@@ -42,11 +42,11 @@ export default function Station(props: propsType) {
                 key={uuidv4()} suppressHydrationWarning>
                 {`${props.averageFlow} cm3/s`}
             </p>
-            <Link className="text-slate-100 underline-offset-1" href="" key={uuidv4()}>
+            <Link className="text-slate-100 underline-offset-1" href="/details" key={uuidv4()}>
                 see chart
             </Link>
             <br key={uuidv4()}></br>
-            <Link className="text-slate-100 underline-offset-3" href="" key={uuidv4()}>
+            <Link className="text-slate-100 underline-offset-3" href="/livefeed" key={uuidv4()}>
                 see live video
             </Link>
         </Card>

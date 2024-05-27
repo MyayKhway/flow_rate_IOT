@@ -21,11 +21,9 @@ export default function MapComponent(props: propsType) {
     const position = { lat: 13.729088, lng: 100.76935 }
 
     // to solve type problems
-    let apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-    if (!apiKey) apiKey = '';
+    let apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';
 
-    let mapID = process.env.NEXT_PUBLIC_MAP_ID;
-    if (!mapID) mapID = '';
+    let mapID = process.env.NEXT_PUBLIC_MAP_ID || '';
 
     return (
         <APIProvider apiKey={apiKey}>
