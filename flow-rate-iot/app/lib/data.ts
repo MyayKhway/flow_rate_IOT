@@ -12,7 +12,13 @@ const prisma = new PrismaClient();
 
 export const fetchStations = async () => {
     console.log('Fetching stations data');
-    const allStations = await prisma.station.findMany();
+    const allStations = await prisma.station.findMany(
+        {
+            orderBy: {
+                id: 'asc'
+            }
+        }
+    );
     console.log(allStations);
     return allStations;
 }
@@ -56,30 +62,30 @@ export async function fetchFlowByDateRange(from: string, to: string) {
         to = new Date().toISOString();
     }
     const results = await prisma.flow.findMany({
-            include : {
-                stationFrom: {
-                    select: {
-                        name: true,
-                    }
+        include: {
+            stationFrom: {
+                select: {
+                    name: true,
                 }
-            },
-            where : {
-                time: {
-                    gte: from,
-                    lte: to,
-                }
-            },
-            orderBy : {
-                time: 'asc' 
-            },
-        });
+            }
+        },
+        where: {
+            time: {
+                gte: from,
+                lte: to,
+            }
+        },
+        orderBy: {
+            time: 'asc'
+        },
+    });
     console.log(`returned results have length of: ${results.length}`);
     // returned results will look like this
-      // {
-      // stationId: '0000',
-      // volume: 748.5275216399856,
-      // time: 2024-04-30T17:00:00.000Z,
-      //stationFrom: { name: 'Station0' }
-        // }
+    // {
+    // stationId: '0000',
+    // volume: 748.5275216399856,
+    // time: 2024-04-30T17:00:00.000Z,
+    //stationFrom: { name: 'Station0' }
+    // }
     return results;
 }
