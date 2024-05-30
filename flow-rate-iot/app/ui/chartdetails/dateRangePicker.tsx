@@ -4,7 +4,7 @@ import React from "react"
 import { DateRange, DateRangePicker } from "@/app/ui/chartdetails/datePicker"
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
-export function DateRangePickerPresets() {
+export function DateRangePickerPresets({ selectedStations }: { selectedStations: string[] }) {
     const searchParams = useSearchParams();
 
     const [dateRange, setDateRange] = React.useState<DateRange | undefined>(
@@ -12,14 +12,18 @@ export function DateRangePickerPresets() {
     )
     const params = new URLSearchParams(searchParams);
     if (dateRange != undefined) {
-        if (dateRange.from != undefined && dateRange.to != undefined) {
+        if (dateRange.from != undefined && dateRange.to != undefined && selectedStations.length != 0) {
             params.set('daterange', dateRange.from.toISOString() + dateRange.to.toISOString());
+            params.set('stations', selectedStations.toString());
         } else {
             const params = new URLSearchParams(searchParams);
             params.delete('daterange');
+            params.delete('stations');
         }
     } else {
+        const params = new URLSearchParams(searchParams);
         params.delete('daterange');
+        params.delete('stations');
     }
     const pathname = usePathname();
     const { replace } = useRouter();

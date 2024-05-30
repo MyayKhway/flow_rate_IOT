@@ -55,7 +55,7 @@ export async function fetchLast3hrAvg() {
 }
 
 
-export async function fetchFlowByDateRange(from: string, to: string) {
+export async function fetchFlowByDateRange(from: string, to: string, stations: string[]) {
     // if from or to are empty strings, display last day data
     if (from == 'Z' || to == 'Z') {
         from = new Date(new Date().setHours(0)).toISOString();
@@ -73,6 +73,9 @@ export async function fetchFlowByDateRange(from: string, to: string) {
             time: {
                 gte: from,
                 lte: to,
+            },
+            stationId: {
+                in: stations
             }
         },
         orderBy: {
