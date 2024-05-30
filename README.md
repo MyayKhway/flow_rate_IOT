@@ -353,13 +353,13 @@ This component is the navbar common across all pages on the website. This is ren
 The Dashboard is implemented with five React components. Dashboard component take in MapComponent and StationList, meanwhile MapComponent is made up of *react-google-maps* by vis.gl, which is a Google-sponsored project and the StationList takes in Station components and render them dynamically according to the data fetched by page.tsx in *app/details* router. 
 The components name and their roles can be viewed as so.
 
-![[water-management-dashboard-edited.png]]
+![[./pictures/water-management-dashboard-edited.png]]
 
 ### Details
 
 The details page displays the control panel for searching data and displaying them as a line chart. The changes made in the query(date range and selected stations) are reflected in the URL.
 
-![[water-management-details-edited.png]]
+![[./pictures/water-management-details-edited.png]]
 It should be noted that the DateRangePicker, MultiSelect and LineChart, they are all from tremor raw components which can be included from [tremor raw](https://raw.tremor.so/docs/getting-started/installation).
 
 ### Live Feed
@@ -368,7 +368,7 @@ This page displays live video feed from the sensors. Since a video server or the
 
 The clickable icon can be clicked to add more VideoPlayer components to the VideoWrapper component.
 
-![[water-management-livefeed-edited.png]]
+![[./pictures/water-management-livefeed-edited.png]]
 
 
 
