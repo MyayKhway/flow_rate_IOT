@@ -98,7 +98,7 @@ The details folder and live feed folder represents two routes to details page an
 
 The importance of this folder calls for a separate topic. Since the database is deployed as a Postgresql database on localhost, a Object-Relational-Mapping service like Prisma is needed so that we can hide the database implementation as well as make the queries type-safe. More about Prisma can be read at [Prisma documentations](https://www.prisma.io/docs). The general way Prisma works can be briefly understood from the following picture.
 
-![Prisma Docs](https://raw.githubusercontent.com/MyayKhway/flow_rate_IOT/blob/main/pictures/PrismaPrinciple.png)
+![Prisma Docs](https://github.com/MyayKhway/flow_rate_IOT/blob/main/pictures/PrismaPrinciple.png)
 
 Prisma can be used to fetch data with REST API routes and expose that API to the front end but in this project the data fetching is done directly in Nextjs for prototyping purposes.
 
