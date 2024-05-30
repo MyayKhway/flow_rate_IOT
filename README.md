@@ -54,8 +54,7 @@ The UI is mainly React, with Nextjs framework supporting the routing and server-
 
 Since Nextjs version 14 is being used, the recommended folder structure for organizing different routes are used. the tree of the project folder at level 2 depth can be seen below.
 
-
-.
+```txt
 ├── app
 │   ├── details
 │   ├── globals.css
@@ -82,7 +81,7 @@ Since Nextjs version 14 is being used, the recommended folder structure for orga
 ├── README.md
 ├── tailwind.config.ts
 └── tsconfig.json
-
+```
 
 The details folder and live feed folder represents two routes to details page and live feed page respectively; folder structure for routing. They contain page.tsx files for the page template. If no file is provided here, their page will directly inherit from page.tsx under the app directory.  
 
