@@ -1,7 +1,6 @@
-# Water Management System Front-end Prototype
 ###### Khant Nyi Lynn (66011541) 30th May 2024
 
-This system is for prototyping the front-end side for water management system, which is a system for receiving data from multiple sensors and display them on  a dashboard. This system implements the dashboard as well as a relational database for keeping sample data.
+This system, written in Typescript, is for prototyping the front-end side for water management system, which is a system for receiving data from multiple sensors and display them on  a dashboard. This system implements the dashboard as well as a relational database for keeping sample data.
 
 ## Tech Stack
 
@@ -47,13 +46,44 @@ The UI is mainly React, with Nextjs framework supporting the routing and server-
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
     }
-```
-
+    ```
 
 
 ## Project Structure
 
 Since Nextjs version 14 is being used, the recommended folder structure for organizing different routes are used. the tree of the project folder at level 2 depth can be seen below.
+
+```bash
+.
+├── app
+│   ├── details
+│   ├── globals.css
+│   ├── icon.ico
+│   ├── layout.tsx
+│   ├── lib
+│   ├── livefeed
+│   ├── page.tsx
+│   └── ui
+├── .eslintrc.json
+├── .gitignore
+├── next.config.mjs
+├── package.json
+├── postcss.config.mjs
+├── docker-compose.yml
+├── prisma
+│   ├── migrations
+│   ├── schema.prisma
+│   └── seed.ts
+├── public
+│   ├── cropped-kmitl-logoThai-300x300.png
+│   ├── next.svg
+│   ├── placeholder-logo.png
+│   └── vercel.svg
+├── README.md
+├── tailwind.config.ts
+└── tsconfig.json
+```
+
 The details folder and live feed folder represents two routes to details page and live feed page respectively; folder structure for routing. They contain page.tsx files for the page template. If no file is provided here, their page will directly inherit from page.tsx under the app directory.  
 
 *global.css* has configuration for global css properties. Meanwhile. icon.ico is used for icon at the browser bar. layout.tsx represents layout for the whole website. It will be inherited by other routes if the routes do not define their own layout; this is true in this project.
@@ -86,26 +116,66 @@ There is also a seed.ts file in this directory. That is used for seeding the dat
 
 ## Setups to run on localhost
 
-Clone the repository.
+### Setting up the environment
+#### Install nodejs 
+
+Install nodejs on Linux with Package manager as follows.
 ```bash
-git clone https://github.com/MyayKhway/flow_rate_IOT
+# installs fnm (Fast Node Manager)
+curl -fsSL https://fnm.vercel.app/install | bash
+
+# download and install Node.js
+fnm use --install-if-missing 20
+
+# verifies the right Node.js version is in the environment
+node -v # should print `v20.14.0`
+
+# verifies the right NPM version is in the environment
+npm -v # should print `10.7.0`
 ```
 
-*cd* to the directory and set up the environment variables in *.env.development*. Since Google Maps API is used for maps component and Prisma is used for ORM (Object-Relational-Mapping) the API key for Google and the database link for Prisma is needed.
+Install all the dependencies with npm i.
+```bash
+npm i
+```
+Windows and Mac install instructions can be seen at [Nodejs website](https://nodejs.org/en/download/package-manager).
 
-```env
+### Install Docker Engine 
+
+For Linux, follow the instructions on [docker official website](https://docs.docker.com/desktop/install/ubuntu/).
+
+Set up the environment variables. use `.env.development` for development.
+
+```env.development
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY= Google Map API key
 NEXT_PUBLIC_MAP_ID= Map ID can be accessed from Google Console
 
-# Environment variables declared in this file are automatically made available to Prisma.
-# See the documentation for more detail: https://pris.ly/d/prisma-schema#accessing-environment-variables-from-the-schema
 
-# Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server, MongoDB and CockroachDB.
-# See the documentation for all the connection string options: https://pris.ly/d/connection-strings
+DATABASE_URL="postgresql://postgres:123@localhost:5434/water-management?schema=public"
+```
+DATABASE_URL must be in accordance with the `docker-compose.yml`.
 
+After that, run 
+```bash
+docker compose dev-db -d
+```
 
+After that, migrate the database, it automatically seeds the database.
 
-DATABASE_URL="postgresql://{username}:{password}@localhost:5432/{database_name}?schema=public"
+```bash
+npx prisma migrate dev
+```
+
+To check if the database is seeded, run
+
+```bash
+npx prisma studio
+```
+This will open a graphical interface for managing the database on port 5555.
+
+If the database is not found to be seeded, seed it with the command.
+```bash
+npx prisma db seed
 ```
 
 ### Seeding
@@ -113,10 +183,60 @@ DATABASE_URL="postgresql://{username}:{password}@localhost:5432/{database_name}?
 There is two ways to go about seeding in the database.
 1. **Using the Prisma ORM**
 2. **Populate the SQL relations with SQL itself**
+***PLEASE USE THIS METHOD ONLY IF ALL ELSE FAIL***
 
 #### Using the Prisma ORM
 
+Before reading the following code and steps, it is suggested to visit the  [official website](https://www.prisma.io/docs/orm/prisma-migrate/getting-started).
+
 After setting up the *schema.prisma* with either `npx prisma db push` or `npx prisma db pull`, you will need to seed the data. This can be easily done by running a seed script kept in the prisma directory. However, to run `npx prisma seed`, it needs to be configured in package.json like below.
+
+Instead of running database pull or push, `npx prisma db migrate` [migrate commands](https://www.prisma.io/docs/orm/prisma-migrate/getting-started) can be run first, this will implicitly run the seed command in package.json and seed the database as well.
+
+Firstly, the relations are established as models on prisma.schema in prisma folder at root. One to many relationships can be represented as follows.
+```schema
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  relationMode = "foreignKeys"
+}
+
+model Flow {
+  stationFrom   Station     @relation(fields: [stationId], references: [id])
+  stationId     String      @db.VarChar(50)
+  volume        Float
+  time          DateTime   @db.Timestamptz(6)
+  
+  @@unique([stationId, time])
+}
+
+model Station {
+  id        String      @id @db.VarChar(50)
+  lat       Float
+  lng       Float
+  name      String     @db.VarChar(255)
+  volumes   Flow[]
+}
+```
+
+From this the ORM will deduce the schema of the relations(tables) as follows. The schemas can be checked by changing into postgres user, typing in psql command and \\dt {table}.
+```psql
+\d+ "Flow"
+```
+gives the following.
+![[Pasted image 20240601180350.png]]
+```psql
+\d+ "Station"
+```
+gives the following.
+![[Pasted image 20240601180443.png]]
+After running the `npx prisma migrate dev --name init` , Flow and Station tables will be created in the database. After that, the tables will be populated with the SQL statements.
+
 
 ```json
 {
@@ -134,7 +254,7 @@ After setting up the *schema.prisma* with either `npx prisma db push` or `npx pr
   },
 ```
 
-The seed.ts is written with Prisma, however, due to the nature of data being difficult to simulate with ORM supported syntax. The raw SQL was executed by the ORM.
+The seed.ts is written with Prisma, however, due to the nature of data being difficult to simulate with ORM supported syntax. The raw SQL was executed by the ORM. This seed.ts file will be run whenever `npx prisma migrate` is run therefore whenever the project needs to be started in a new environment, the database can be readily migrated.
 
 ```typescript
 import { PrismaClient } from '@prisma/client';
@@ -238,6 +358,17 @@ model Station {
 }
 ```
 
+From this the ORM will deduce the schema of the relations(tables) as follows. The schemas can be checked by changing into postgres user, typing in psql command and \\dt {table}.
+```psql
+\d+ "Flow"
+```
+gives the following.
+![[Pasted image 20240601180350.png]]
+```psql
+\d+ "Station"
+```
+gives the following.
+![[Pasted image 20240601180443.png]]
 After running the `npx prisma migrate dev --name init` , Flow and Station tables will be created in the database. After that, the tables will be populated with the SQL statements.
 
 Change the user to the database user. (on Linux). Windows equivalent way of switching can be read [here](https://superuser.com/questions/1371922/switch-user-in-powershell-like-sudo-su-in-unix-linux) 
