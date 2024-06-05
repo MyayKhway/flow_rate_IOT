@@ -1,3 +1,5 @@
+# Water Management System
+
 ###### Khant Nyi Lynn (66011541) 30th May 2024
 
 This system, written in Typescript, is for prototyping the front-end side for water management system, which is a system for receiving data from multiple sensors and display them on  a dashboard. This system implements the dashboard as well as a relational database for keeping sample data.
